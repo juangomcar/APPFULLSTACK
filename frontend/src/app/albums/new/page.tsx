@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ProductForm } from './product-form';
+import { AlbumForm } from './albums-form';
 
 
 
@@ -11,7 +11,7 @@ function ProductsNewPage() {
                     <CardTitle className="text-2xl font-bold text-center">Songs Catalogue </CardTitle> {}
                 </CardHeader>
                 <CardContent>
-                    <ProductForm />
+                    <AlbumForm />
                 </CardContent>
             </Card>
         </div>

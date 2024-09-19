@@ -4,32 +4,33 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { createProduct } from "./products.api"; 
+import { createAlbum } from "./albums.api"; 
 import { useRouter } from "next/navigation";
 
-export function ProductForm() {
+export function AlbumForm() {
     const { register, handleSubmit, reset } = useForm();
     const router = useRouter();
 
     const onSubmit = async (data: any) => {
-        await createProduct({
+        await createAlbum({
             title: data.title, 
-            duration: parseInt(data.duration, 10), 
-            albumId: parseInt(data.albumId, 10), 
+            releaseDate: data.releaseDate ? new Date(data.releaseDate) : null, 
+            artistId: parseInt(data.artistId, 10),
+            imageUrl: data.imageUrl || null,
         });
-        router.push("/"); 
+        router.push("/");
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} onReset={() => reset()} className="space-y-4">
             {}
             <div className="form-group">
-                <Label htmlFor="title">Song Title</Label>
+                <Label htmlFor="title">Album Title</Label>
                 <Input
                     {...register('title')}
                     type="text"
                     id="title"
-                    placeholder="Enter song title"
+                    placeholder="Enter album title"
                     className="w-full h-10"
                     required
                 />
@@ -37,40 +38,48 @@ export function ProductForm() {
 
             {}
             <div className="form-group">
-                <Label htmlFor="duration">Duration (seconds)</Label>
+                <Label htmlFor="releaseDate">Release Date</Label>
                 <Input
-                    {...register('duration')}
-                    type="number"
-                    id="duration"
-                    placeholder="Enter song duration in seconds"
+                    {...register('releaseDate')}
+                    type="date"
+                    id="releaseDate"
                     className="w-full h-10"
-                    required
-                    min="0"
                 />
             </div>
 
             {}
             <div className="form-group">
-                <Label htmlFor="albumId">Album ID</Label>
+                <Label htmlFor="artistId">Artist ID</Label>
                 <Input
-                    {...register('albumId')}
+                    {...register('artistId')}
                     type="number"
-                    id="albumId"
-                    placeholder="Enter album ID"
+                    id="artistId"
+                    placeholder="Enter artist ID"
                     className="w-full h-10"
                     required
-                    min="1"
+                />
+            </div>
+
+            {}
+            <div className="form-group">
+                <Label htmlFor="imageUrl">Image URL</Label>
+                <Input
+                    {...register('imageUrl')}
+                    type="text"
+                    id="imageUrl"
+                    placeholder="Enter image URL (optional)"
+                    className="w-full h-10"
                 />
             </div>
 
             {}
             <div className="button-group flex justify-center">
                 <Button type="submit" className="btn btn-primary w-full h-12">
-                    Add to catalogue
+                    Create Album
                 </Button>
             </div>
         </form>
     );
 }
 
-export default ProductForm;
+export default AlbumForm;
