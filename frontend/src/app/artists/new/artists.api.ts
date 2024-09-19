@@ -1,4 +1,4 @@
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function createArtist(productData: any) {
     const res = await fetch('http://localhost:4000/api/artists', {
         method: 'POST',

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 export async function createAlbum(productData: any) {
     const res = await fetch('http://localhost:4000/api/albums', {
