@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +13,7 @@ export function ProductForm() {
     const { register, handleSubmit, reset } = useForm();
     const router = useRouter();
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 
     const onSubmit = async (data: any) => {
         await createProduct({
