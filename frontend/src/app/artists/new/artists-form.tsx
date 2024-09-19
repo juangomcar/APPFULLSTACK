@@ -11,8 +11,7 @@ import { useRouter } from "next/navigation";
 export function ArtistForm() {
     const { register, handleSubmit, reset } = useForm();
     const router = useRouter();
-    
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 
     const onSubmit = async (data: any) => {
         await createArtist({
