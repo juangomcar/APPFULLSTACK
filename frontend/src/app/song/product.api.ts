@@ -1,15 +1,15 @@
 export async function viewProduct() {
-    const res = await fetch('http://localhost:4000/api/songs', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
-
-    if (!res.ok) {
-        throw new Error('Error fetching songs');
+  const res = await fetch('https://apisongs-production.up.railway.app/api/songs', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
     }
+  });
 
-    const data = await res.json();
-    return data;
+  if (!res.ok) {
+    throw new Error('Error fetching songs');
+  }
+
+  const data = await res.json();
+  return data;
 }
