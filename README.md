@@ -1,2 +1,2 @@
 # APP-FULLSTACK
-Trabajo full stack de arquitectura
+Trabajo full stack de arquitectura de Software
