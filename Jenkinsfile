@@ -8,25 +8,31 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // comandos para construir tu aplicación
+                sh 'echo "Building the application..."'
+                // Aquí irían los comandos reales para construir tu aplicación
             }
         }
         stage('Test') {
             steps {
-                // comandos para probar tu aplicación
+                sh 'echo "Testing the application..."'
+                // Aquí irían los comandos reales para probar tu aplicación
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-                    // comandos para construir la imagen Docker
+                    sh 'echo "Building Docker image..."'
+                    // Aquí irían los comandos para construir la imagen Docker, por ejemplo:
+                    // sh 'docker build -t nombre-imagen .'
                 }
             }
         }
         stage('Run Docker Image') {
             steps {
                 script {
-                    // comandos para ejecutar la imagen Docker
+                    sh 'echo "Running Docker image..."'
+                    // Aquí irían los comandos para ejecutar la imagen Docker, por ejemplo:
+                    // sh 'docker run -d nombre-imagen'
                 }
             }
         }
