@@ -1,29 +1,33 @@
 pipeline {
-    agent any
+    agent any 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/juangomcar/APPFULLSTACK'
+                checkout scm 
             }
         }
         stage('Build') {
             steps {
-                sh 'npm install'
+                // comandos para construir tu aplicación
             }
         }
         stage('Test') {
             steps {
-                sh 'npm test'
+                // comandos para probar tu aplicación
             }
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t appfullstack .'
+                script {
+                    // comandos para construir la imagen Docker
+                }
             }
         }
         stage('Run Docker Image') {
             steps {
-                sh 'docker run -d -p 8080:8080 appfullstack'
+                script {
+                    // comandos para ejecutar la imagen Docker
+                }
             }
         }
     }
