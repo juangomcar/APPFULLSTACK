@@ -23,7 +23,16 @@ pipeline {
                 script {
                     sh 'echo "Building Docker image..."'
                     // Aquí irían los comandos para construir la imagen Docker, por ejemplo:
-                    // sh 'docker build -t nombre-imagen .'
+                    sh 'docker build -t nombre-imagen .'
+                }
+            }
+        }
+        stage('Scan Docker Image with Trivy') {
+            steps {
+                script {
+                    sh 'echo "Scanning Docker image with Trivy..."'
+                    // Asegúrate de que el nombre de la imagen y la etiqueta sean correctos
+                    sh 'trivy image --exit-code 1 --severity HIGH,CRITICAL nombre-imagen:tag'
                 }
             }
         }
@@ -32,7 +41,7 @@ pipeline {
                 script {
                     sh 'echo "Running Docker image..."'
                     // Aquí irían los comandos para ejecutar la imagen Docker, por ejemplo:
-                    // sh 'docker run -d nombre-imagen'
+                    sh 'docker run -d nombre-imagen'
                 }
             }
         }
