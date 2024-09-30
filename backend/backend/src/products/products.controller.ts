@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Controller, Get, Post, Body, Patch, Param, Delete, InternalServerErrorException, ConflictException } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateArtistDto } from './dto/create-product.dto';  
