@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, ConflictException, InternalServerErrorException, Logger } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateArtistDto, CreateAlbumDto, CreateSongDto } from './dto/create-product.dto';
 import { UpdateArtistDto, UpdateAlbumDto, UpdateSongDto } from './dto/update-product.dto';  
 import { Prisma } from '@prisma/client'; 
@@ -14,7 +14,6 @@ export class ProductsService {
 
 
   async createArtist(createArtistDto: CreateArtistDto) {
-    this.logger.log(createArtistDto) 
     try {
       return await this.prismaService.artist.create({
         data: createArtistDto,
@@ -23,10 +22,10 @@ export class ProductsService {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
         throw new ConflictException(`Artist with name "${createArtistDto.name}" already exists`);
       }
-      //throw new InternalServerErrorException();
-      return error
+      throw new InternalServerErrorException();
     }
   }
+  
 
   async findAllArtists() {
     return this.prismaService.artist.findMany();
@@ -84,7 +83,7 @@ export class ProductsService {
     return this.prismaService.album.findMany();
   }
 
-  async findOneAlbum(id: number) {
+  async findOneAlbum(id: number): Promise<{ id: number; title: string; releaseDate: Date | null; artistId: number; imageUrl: string | null; createdAt: Date; updatedAt: Date; } | null> {
     const album = await this.prismaService.album.findUnique({
       where: { id },
     });
@@ -136,7 +135,7 @@ export class ProductsService {
     return this.prismaService.song.findMany();
   }
 
-  async findOneSong(id: number) {
+  async findOneSong(id: number): Promise<{ id: number; title: string; duration: number; albumId: number; createdAt: Date; updatedAt: Date; } | null> {
     const song = await this.prismaService.song.findUnique({
       where: { id },
     });

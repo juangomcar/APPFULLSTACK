@@ -1,20 +1,13 @@
-# Usa una imagen base de Node.js
-FROM node:18-alpine
+FROM node:18
 
-# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copia el package.json y el package-lock.json al contenedor
-COPY package*.json ./
+COPY backend/package*.json ./
 
-# Instala las dependencias
 RUN npm install
 
-# Copia el resto del código
-COPY . .
+COPY backend ./
 
-# Expone el puerto en el que la aplicación va a ejecutarse
-EXPOSE 3000
+EXPOSE 4000
 
-# Comando para ejecutar la aplicación
-CMD ["npm", "start"]
+CMD ["npm", "run", "start", "--foreground"]

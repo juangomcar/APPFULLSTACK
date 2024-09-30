@@ -3,6 +3,7 @@ import { ProductsService } from './products.service';
 import { CreateAlbumDto } from './dto/create-product.dto';  
 import { UpdateAlbumDto} from './dto/update-product.dto';  
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { NotFoundException } from '@nestjs/common';
 
 @ApiTags('albums')
 @Controller('api/albums')
@@ -25,12 +26,17 @@ export class AlbumsController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get album by id' })
-  @ApiResponse({ status: 200, description: 'Return the album with the given id.' })
-  @ApiResponse({ status: 404, description: 'Album not found.' })
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOneAlbum(+id);
+@ApiOperation({ summary: 'Get album by id' })
+@ApiResponse({ status: 200, description: 'Return the album with the given id.' })
+@ApiResponse({ status: 404, description: 'Album not found.' })
+async findOne(@Param('id') id: string) {
+  const album = await this.productsService.findOneAlbum(+id);  
+  if (!album) {
+    throw new NotFoundException('Album not found');
   }
+
+  return album;
+}
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update album by id' })

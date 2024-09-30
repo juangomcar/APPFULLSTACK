@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, InternalServerErrorException } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateSongDto } from './dto/create-product.dto';  
 import { UpdateSongDto} from './dto/update-product.dto';  
@@ -28,8 +28,14 @@ export class SongsController {
   @ApiOperation({ summary: 'Get song by id' })
   @ApiResponse({ status: 200, description: 'Return the song with the given id.' })
   @ApiResponse({ status: 404, description: 'Song not found.' })
-  findOne(@Param('id') id: string) {
-    return this.productsService.findOneSong(+id);
+  async findOne(@Param('id') id: string) {
+    const song = await this.productsService.findOneSong(+id);
+  
+    if (!song) {
+      throw new NotFoundException(`Song with id ${id} not found`);
+    }
+  
+    return song;
   }
 
   @Patch(':id')
@@ -44,7 +50,12 @@ export class SongsController {
   @ApiOperation({ summary: 'Delete song by id' })
   @ApiResponse({ status: 200, description: 'The song has been successfully deleted.' })
   @ApiResponse({ status: 404, description: 'Song not found.' })
-  remove(@Param('id') id: string) {
-    return this.productsService.removeSong(+id);
+  async remove(@Param('id') id: string) {
+    try {
+      return await this.productsService.removeSong(+id);
+    } catch (error) {
+      throw new InternalServerErrorException('Could not remove song');
+    }
   }
+  
 }
