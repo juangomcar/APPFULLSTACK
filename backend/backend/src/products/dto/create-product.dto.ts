@@ -18,8 +18,10 @@ export class CreateArtistDto {
   
 
   export class CreateSongDto {
-    title: string = '';  
-    duration: number = 0; 
-    albumId: number = 0; 
+    title!: string;
+    duration!: number;
+    albumId!: number;
+    artistId?: number;
+    createdAt?: Date; 
+    updatedAt?: Date;
   }
-  
