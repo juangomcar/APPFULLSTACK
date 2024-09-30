@@ -12,4 +12,4 @@ COPY backend/backend/.env .env
 
 EXPOSE 4000
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start", "--foreground"]
